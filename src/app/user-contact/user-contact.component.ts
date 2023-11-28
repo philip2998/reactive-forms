@@ -8,7 +8,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class UserContactComponent {
   @Input()
-  public childForm: FormGroup;
+  public childForm: any;
 
   @Input()
   public arrayIndex: number;
