@@ -47,6 +47,7 @@
         class="button-danger"
         type="button"
         (click)="deleteContact(arrayIndex)"
+        *ngIf="totalContacts > 1"
       >
         <svg
           class="button-icon large"

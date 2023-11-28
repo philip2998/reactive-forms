@@ -13,6 +13,9 @@ export class UserContactComponent {
   @Input()
   public arrayIndex: number;
 
+  @Input()
+  public totalContacts: number;
+
   @Output()
   public deleteContactEvent: EventEmitter<number> = new EventEmitter<number>();
 

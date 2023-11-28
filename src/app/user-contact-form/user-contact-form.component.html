@@ -19,12 +19,18 @@
       <app-user-contact
         [childForm]="childForm"
         [arrayIndex]="i"
+        [totalContacts]="contactArray.length"
         (deleteContactEvent)="deleteContact($event)"
       ></app-user-contact>
     </ol>
   </ul>
 
-  <button class="text-button" type="button" (click)="addUserContactItem()">
+  <button
+    class="text-button"
+    type="button"
+    (click)="addUserContactItem()"
+    [disabled]="!contactArray.valid"
+  >
     Add another contact
     <svg
       class="button-icon"
