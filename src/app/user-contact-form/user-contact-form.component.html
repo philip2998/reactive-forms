@@ -28,6 +28,7 @@
   <button
     class="text-button"
     type="button"
+    *ngIf="contactArray.length < 3; else maxContactsElse"
     (click)="addUserContactItem()"
     [disabled]="!contactArray.valid"
   >
@@ -43,7 +44,19 @@
     </svg>
   </button>
 
+  <ng-template #maxContactsElse>
+    <span class="warn-message">
+      3 is the maximum number of contacts you can add at this time.
+    </span>
+  </ng-template>
+
   <div class="button-row">
-    <button class="button-success" type="submit">Submit</button>
+    <button
+      class="button-success"
+      type="submit"
+      [disabled]="!userContactForm.valid"
+    >
+      Submit
+    </button>
   </div>
 </form>
