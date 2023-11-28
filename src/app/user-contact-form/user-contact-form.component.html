@@ -12,12 +12,19 @@
   </p>
 
   <ul class="contacts-list">
-    <ol class="contacts-list-item">
-      <app-user-contact></app-user-contact>
+    <ol
+      class="contacts-list-item"
+      *ngFor="let childForm of contactArray.controls; let i = index"
+    >
+      <app-user-contact
+        [childForm]="childForm"
+        [arrayIndex]="i"
+        (deleteContactEvent)="deleteContact($event)"
+      ></app-user-contact>
     </ol>
   </ul>
 
-  <button class="text-button" type="button">
+  <button class="text-button" type="button" (click)="addUserContactItem()">
     Add another contact
     <svg
       class="button-icon"

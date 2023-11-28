@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
@@ -7,6 +7,15 @@ import { FormControl, FormGroup } from '@angular/forms';
   styleUrls: ['./user-contact.component.scss'],
 })
 export class UserContactComponent {
+  @Input()
+  public childForm: FormGroup;
+
+  @Input()
+  public arrayIndex: number;
+
+  @Output()
+  public deleteContactEvent: EventEmitter<number> = new EventEmitter<number>();
+
   constructor() {}
 
   static addUserContactItem(): FormGroup {
@@ -14,5 +23,9 @@ export class UserContactComponent {
       name: new FormControl(''),
       email: new FormControl(''),
     });
+  }
+
+  public deleteContact(index: number): void {
+    this.deleteContactEvent.next(index);
   }
 }

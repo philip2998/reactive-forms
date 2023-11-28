@@ -18,8 +18,23 @@ export class UserContactFormComponent implements OnInit {
 
   public generateUserContactForm(): void {
     this.userContactForm = new FormGroup({
-      contacts: new FormArray([UserContactComponent.addUserContactItem()]),
+      contacts: new FormArray([
+        UserContactComponent.addUserContactItem(),
+        UserContactComponent.addUserContactItem(),
+      ]),
     });
+  }
+
+  public addUserContactItem(): void {
+    this.contactArray?.push(UserContactComponent.addUserContactItem());
+  }
+
+  public deleteContact(index: number): void {
+    this.contactArray?.removeAt(index);
+  }
+
+  get contactArray(): FormArray {
+    return this.userContactForm?.get('contacts') as FormArray;
   }
 
   public submitUserContactForm(): void {
