@@ -6,7 +6,12 @@
       <div class="form-row">
         <label class="form-label" for="name">
           Name
-          <span class="field-error"> This is a required field. </span>
+          <span
+            class="field-error"
+            *ngIf="nameField?.hasError('required') && nameField?.dirty"
+          >
+            This is a required field.
+          </span>
         </label>
         <input
           class="form-element"
@@ -20,7 +25,12 @@
       <div class="form-row">
         <label class="form-label" for="email">
           Email
-          <span class="field-error"> This is a required field. </span>
+          <span
+            class="field-error"
+            *ngIf="emailField?.hasError('required') && emailField?.dirty"
+          >
+            This is a required field.
+          </span>
         </label>
         <input
           class="form-element"
