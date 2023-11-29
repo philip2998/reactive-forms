@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormGroup } from '@angular/forms';
+import { FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
 import { UserContactComponent } from '../user-contact/user-contact.component';
 
 @Component({
@@ -18,12 +18,32 @@ export class UserContactFormComponent implements OnInit {
 
   public generateUserContactForm(): void {
     this.userContactForm = new FormGroup({
-      contacts: new FormArray([UserContactComponent.addUserContactItem()]),
+      contacts: new FormArray([UserContactComponent.addUserInitialItems()]),
     });
   }
 
-  public addUserContactItem(): void {
-    this.contactArray?.push(UserContactComponent.addUserContactItem());
+  public addUserContact(): void {
+    const newContact = UserContactComponent.addUserInitialItems();
+
+    // Copy values from the previous contact
+    const previousContact = this.contactArray.at(this.contactArray.length - 1);
+    if (previousContact) {
+      newContact.patchValue(previousContact.value);
+    }
+
+    const existingContacts = this.contactArray.controls.length;
+
+    if (existingContacts === 1) {
+      newContact.addControl(
+        'email',
+        new FormControl('', [Validators.required, Validators.email])
+      );
+      newContact.addControl('city', new FormControl('', Validators.required));
+    } else if (existingContacts === 2) {
+      newContact.addControl('state', new FormControl('', Validators.required));
+      newContact.addControl('zip', new FormControl('', Validators.required));
+    }
+    this.contactArray.push(newContact);
   }
 
   public deleteContact(index: number): void {

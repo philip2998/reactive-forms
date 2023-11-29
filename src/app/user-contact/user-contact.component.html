@@ -3,42 +3,30 @@
 
   <div class="form-row-outer-wrapper">
     <div class="input-section">
-      <div class="form-row">
-        <label class="form-label" for="name">
-          Name
-          <span
-            class="field-error"
-            *ngIf="nameField?.hasError('required') && nameField?.dirty"
-          >
-            This is a required field.
-          </span>
-        </label>
-        <input
-          class="form-element"
-          type="text"
-          name="name"
-          id="name"
-          formControlName="name"
-        />
-      </div>
-
-      <div class="form-row">
-        <label class="form-label" for="email">
-          Email
-          <span
-            class="field-error"
-            *ngIf="emailField?.hasError('required') && emailField?.dirty"
-          >
-            This is a required field.
-          </span>
-        </label>
-        <input
-          class="form-element"
-          type="text"
-          name="email"
-          id="email"
-          formControlName="email"
-        />
+      <div *ngFor="let section of sections; let i = index">
+        <ng-container *ngIf="arrayIndex === i">
+          <div class="form-row" *ngFor="let field of section.fields">
+            <label class="form-label" [for]="field">
+              {{ field.charAt(0).toUpperCase() + field.slice(1) }}
+              <span
+                class="field-error"
+                *ngIf="
+                  getFormControl(field)?.hasError('required') &&
+                  getFormControl(field)?.dirty
+                "
+              >
+                This is a required field.
+              </span>
+            </label>
+            <input
+              class="form-element"
+              type="text"
+              [name]="field"
+              [id]="field"
+              [formControlName]="field"
+            />
+          </div>
+        </ng-container>
       </div>
     </div>
 

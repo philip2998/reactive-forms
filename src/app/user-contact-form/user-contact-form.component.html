@@ -6,10 +6,7 @@
 >
   <h2>Contact form</h2>
 
-  <p>
-    Please add each of your contacts below. Once you are happy with data you
-    have added, please click submit.
-  </p>
+  <p>Please add your contacts information below.</p>
 
   <ul class="contacts-list">
     <ol
@@ -29,10 +26,10 @@
     class="text-button"
     type="button"
     *ngIf="contactArray.length < 3; else maxContactsElse"
-    (click)="addUserContactItem()"
+    (click)="addUserContact()"
     [disabled]="!contactArray.valid"
   >
-    Add another contact
+    Continue to add
     <svg
       class="button-icon"
       viewBox="0 0 448 448"

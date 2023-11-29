@@ -7,34 +7,55 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./user-contact.component.scss'],
 })
 export class UserContactComponent {
-  @Input()
-  public childForm: any;
+  @Input() public childForm: any;
+  @Input() public arrayIndex: number;
+  @Input() public totalContacts: number;
 
-  @Input()
-  public arrayIndex: number;
+  @Output() public deleteContactEvent: EventEmitter<number> =
+    new EventEmitter<number>();
 
-  @Input()
-  public totalContacts: number;
+  sections = [
+    { fields: ['name', 'surname'] },
+    { fields: ['email', 'city'] },
+    { fields: ['state', 'zip'] },
+  ];
 
-  @Output()
-  public deleteContactEvent: EventEmitter<number> = new EventEmitter<number>();
+  getFormControl(field: string): FormControl {
+    return this.childForm?.get(field) as FormControl;
+  }
 
   get nameField(): FormControl {
-    return this.childForm?.get('name') as FormControl;
+    return this.getFormControl('name');
+  }
+
+  get surnameField(): FormControl {
+    return this.getFormControl('surname');
   }
 
   get emailField(): FormControl {
-    return this.childForm?.get('email') as FormControl;
+    return this.getFormControl('email');
+  }
+
+  get cityField(): FormControl {
+    return this.getFormControl('city');
+  }
+
+  get stateField(): FormControl {
+    return this.getFormControl('state');
+  }
+
+  get zipField(): FormControl {
+    return this.getFormControl('zip');
   }
 
   constructor() {}
 
-  static addUserContactItem(): FormGroup {
+  static addUserInitialItems(): FormGroup {
     return new FormGroup({
       name: new FormControl('', {
         validators: [Validators.required],
       }),
-      email: new FormControl('', {
+      surname: new FormControl('', {
         validators: [Validators.required],
       }),
     });
