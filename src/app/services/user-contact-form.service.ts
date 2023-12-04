@@ -1,5 +1,10 @@
 import { Injectable } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 
 @Injectable({
   providedIn: 'root',
@@ -19,13 +24,13 @@ export class UserContactFormService {
   }
 
   addAdditionalFields(contact: FormGroup, index: number): void {
-    if (index === 0) {
+    if (index === 1) {
       contact.addControl(
         'email',
         new FormControl('', [Validators.required, Validators.email])
       );
       contact.addControl('city', new FormControl('', Validators.required));
-    } else if (index === 1) {
+    } else if (index === 2) {
       contact.addControl('state', new FormControl('', Validators.required));
       contact.addControl('zip', new FormControl('', Validators.required));
     }
@@ -33,7 +38,7 @@ export class UserContactFormService {
 
   copyPreviousContactValues(
     newContact: FormGroup,
-    previousContact: FormGroup
+    previousContact: AbstractControl
   ): void {
     newContact.patchValue(previousContact.value);
   }

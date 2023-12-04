@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormGroup, FormControl, Validators } from '@angular/forms';
-import { UserContactComponent } from '../user-contact/user-contact.component';
+import { FormArray, FormGroup } from '@angular/forms';
+import { UserContactFormService } from '../services/user-contact-form.service';
 
 @Component({
   selector: 'app-user-contact-form',
@@ -10,7 +10,7 @@ import { UserContactComponent } from '../user-contact/user-contact.component';
 export class UserContactFormComponent implements OnInit {
   public userContactForm: FormGroup;
 
-  constructor() {}
+  constructor(private userContactService: UserContactFormService) {}
 
   ngOnInit(): void {
     this.generateUserContactForm();
@@ -18,31 +18,29 @@ export class UserContactFormComponent implements OnInit {
 
   public generateUserContactForm(): void {
     this.userContactForm = new FormGroup({
-      contacts: new FormArray([UserContactComponent.addUserInitialItems()]),
+      contacts: new FormArray([
+        this.userContactService.addUserContactInitItems(),
+      ]),
     });
   }
 
   public addUserContact(): void {
-    const newContact = UserContactComponent.addUserInitialItems();
+    const newContact = this.userContactService.addUserContactInitItems();
 
     // Copy values from the previous contact
     const previousContact = this.contactArray.at(this.contactArray.length - 1);
     if (previousContact) {
-      newContact.patchValue(previousContact.value);
-    }
-
-    const existingContacts = this.contactArray.controls.length;
-
-    if (existingContacts === 1) {
-      newContact.addControl(
-        'email',
-        new FormControl('', [Validators.required, Validators.email])
+      this.userContactService.copyPreviousContactValues(
+        newContact,
+        previousContact
       );
-      newContact.addControl('city', new FormControl('', Validators.required));
-    } else if (existingContacts === 2) {
-      newContact.addControl('state', new FormControl('', Validators.required));
-      newContact.addControl('zip', new FormControl('', Validators.required));
     }
+
+    this.userContactService.addAdditionalFields(
+      newContact,
+      this.contactArray.controls.length
+    );
+
     this.contactArray.push(newContact);
   }
 

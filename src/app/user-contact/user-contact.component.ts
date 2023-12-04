@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-user-contact',
@@ -46,19 +46,6 @@ export class UserContactComponent {
 
   get zipField(): FormControl {
     return this.getFormControl('zip');
-  }
-
-  constructor() {}
-
-  static addUserInitialItems(): FormGroup {
-    return new FormGroup({
-      name: new FormControl('', {
-        validators: [Validators.required],
-      }),
-      surname: new FormControl('', {
-        validators: [Validators.required],
-      }),
-    });
   }
 
   public deleteContact(index: number): void {
