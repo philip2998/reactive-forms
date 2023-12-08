@@ -61,7 +61,7 @@ export class UserContactFormComponent implements OnInit {
   }
 
   public submitUserContactForm(): void {
-    const webhookUrl = 'http://localhost:3000/api';
+    const webhookUrl = 'http://localhost:3000/';
     const combinedContact = this.contactArray.controls.reduce(
       (result, currentContact) => {
         return { ...result, ...currentContact.value };
